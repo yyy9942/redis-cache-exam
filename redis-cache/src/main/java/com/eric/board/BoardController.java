@@ -27,14 +27,14 @@ public class BoardController {
   
   @GetMapping("dd")
   @ResponseBody
-  public String boardsDd(String size, Model model) {
+  public List<Board> boardsDd(String size, Model model) {
     HashMap<String, String> map = new HashMap<String, String>();
     map.put("size", size);
     List<Board> boards = service.getBoards(map);
     model.addAttribute("boards", boards);
     
     
-    return "main";
+    return boards;
   }
 
 }

@@ -32,7 +32,6 @@ public class RedisConfig {
     redisTemplate.setKeySerializer(serializer);
     redisTemplate.setValueSerializer(serializer);
     redisTemplate.setConnectionFactory(connectionFactory);
-    
     return redisTemplate;
   }
 
