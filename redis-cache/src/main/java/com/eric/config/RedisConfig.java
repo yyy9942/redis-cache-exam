@@ -23,15 +23,12 @@ public class RedisConfig {
   
   @Autowired
   public ObjectMapper objectMapper;
-
-  @Autowired
-  public GenericJackson2JsonRedisSerializer serializer;
   
   @Bean
   public RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory connectionFactory) {
     RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
     redisTemplate.setKeySerializer(new StringRedisSerializer());
-    redisTemplate.setValueSerializer(serializer);
+    redisTemplate.setValueSerializer(new GenericJackson2JsonRedisSerializer());
     redisTemplate.setConnectionFactory(connectionFactory);
     return redisTemplate;
   }

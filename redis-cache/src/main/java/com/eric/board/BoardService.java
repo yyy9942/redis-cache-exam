@@ -12,8 +12,12 @@ public class BoardService {
   @Autowired
   BoardRepository repository;
   
-  @Cacheable(key = "#searchKeys", value = "getBoards")
-  public List<Board> getBoards(Map<String, String> searchKeys) {
-    return repository.findByKeys(searchKeys);
+  @Cacheable(key = "#size", value = "getBoards")
+  public List<Board> getBoards(String size) {
+    return repository.createBySize(size);
+  }
+  
+  public static int getDbCount() {
+    return BoardRepository.getDbCount();
   }
 }

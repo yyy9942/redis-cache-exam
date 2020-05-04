@@ -22,20 +22,14 @@ public class CacheConfig {
   ObjectMapper objectMapper;
   
   @Autowired
-  GenericJackson2JsonRedisSerializer jackson2JsonRedisSerializer;
-  
-  @Autowired
-  StringRedisSerializer stringRedisSerializer;
-  
-  @Autowired
   RedisConnectionFactory connectionFactory;
   
   
   @Bean
   public CacheManager redisCacheManager() {
     RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
-      .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(stringRedisSerializer))
-      .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(jackson2JsonRedisSerializer));
+      .serializeKeysWith(RedisSerializationContext.SerializationPair.fromSerializer(new StringRedisSerializer()))
+      .serializeValuesWith(RedisSerializationContext.SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer()));
     
     RedisCacheManager redisCacheManager = RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(connectionFactory).cacheDefaults(redisCacheConfiguration).build();
     return redisCacheManager;

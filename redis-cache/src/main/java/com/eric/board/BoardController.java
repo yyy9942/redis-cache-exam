@@ -1,40 +1,27 @@
 package com.eric.board;
 
-import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 public class BoardController {
   
   @Autowired
   BoardService service;
   
-  @GetMapping("tt")
-  public String boardsTt(String size, Model model) {
-    HashMap<String, String> map = new HashMap<String, String>();
-    map.put("size", size);
-    List<Board> boards = service.getBoards(map);
-    model.addAttribute("boards", boards);
-    
-    
-    return "main";
+  
+  @GetMapping()
+  public List<Board> boards(String size) {
+    List<Board> boards = service.getBoards(size);
+    return boards;
   }
   
-  @GetMapping("dd")
-  @ResponseBody
-  public List<Board> boardsDd(String size, Model model) {
-    HashMap<String, String> map = new HashMap<String, String>();
-    map.put("size", size);
-    List<Board> boards = service.getBoards(map);
-    model.addAttribute("boards", boards);
-    
-    
-    return boards;
+  @GetMapping("count")
+  public int count() {
+    return BoardService.getDbCount();
   }
 
 }
